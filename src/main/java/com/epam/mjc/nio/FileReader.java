@@ -11,12 +11,18 @@ import java.util.Map;
 
 public class FileReader {
 
-    public Profile getDataFromFile(File file) throws IOException {
-        Map<String, String> profileData;
-        try (BufferedReader reader = new BufferedReader(new java.io.FileReader(file))) {
-            profileData = readProfileData(reader);
+    public Profile getDataFromFile(File file)  {
+        try {
+            Map<String, String> profileData;
+            try (BufferedReader reader = new BufferedReader(new java.io.FileReader(file))) {
+                profileData = readProfileData(reader);
+            }
+            return createProfile(profileData);
+        } catch (IOException e) {
+            // Handle the exception (e.g., log it) or return a default Profile object.
+            e.printStackTrace(); // Example: Print the stack trace for debugging purposes.
+            return new Profile(); // Return a default or null Profile object.
         }
-        return createProfile(profileData);
     }
 
     private Map<String, String> readProfileData(BufferedReader reader) throws IOException {
